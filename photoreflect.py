@@ -14,9 +14,9 @@ def run(url):
     encoded = re.findall("<input type=\"hidden\" name=\"__VIEWSTATE\" id=\"__VIEWSTATE\" value=\"(.*?)\" />", r.text)
     if len(encoded):
         decoded = base64.b64decode(encoded[0])
-        password = re.findall(b"ChallengePass\x05\x07(.*?)\x16", decoded)
+        password = re.findall(b"ChallengePass\x05(.*?)\x16", decoded)
         if len(password):
-            print("Password: {0}".format(password[0].decode('utf-8')))
+            print("Password: {0}".format(password[0][1:].decode('utf-8')))
         else:
             print("Password Recovery Failed!")
     else:
